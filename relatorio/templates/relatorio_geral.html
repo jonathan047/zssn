@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel= "stylesheet" href="{% static 'sobreviventes/css/sobreviventes.css' %}">
+{% endblock  %}
+
+
+{% block 'dashboard' %}
+
+
+<h1>Relatório</h1>
+<br>
+<div id= ="att-cliente" class="container">
+    <div>
+        <select id="sobrevivente-select" onchange="dados_sobrevivente()">
+            {% for sobrevivente in sobreviventes  %}
+            <option value="{{sobrevivente.id}}">{{sobrevivente.nome}}</option>
+            {% endfor %} 
+        </select>
+    </div>
+</div> 
+<hr>
+</br>
+<div>
+<table class="table">
+    <thead>
+        <tr>
+            <th  class="table-secondary" scope="col">#</th>
+            <th  class="table-secondary" scope="col">Sobreviventes Infectados(%)</th>
+            <th  class="table-secondary" scope="col">Sobreviventes Não Infectados(%)</th>
+            <th  class="table-secondary" scope="col">Água</th>
+            <th  class="table-secondary" scope="col">Alimentação</th>
+            <th  class="table-secondary" scope="col">Medicação</th>
+            <th  class="table-secondary" scope="col">Munição</th>
+            <th  class="table-secondary" scope="col">Pontos perdidos por estar infectado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sobrevivente in sobreviventes %}
+        
+        <tr>
+            <td class="table-secondary" scope="row">{{sobrevivente.id}}</td>
+            {% if sobrevivente.nome == "Daryl Dixon" %}
+            <td class="table-secondary" scope="row">{{sobrevivente.nome}}</td>
+            {% else%}
+            <td class="table-secondary" scope="row"></td>
+            {% endif%}
+            
+            {% if sobrevivente.nome != "Daryl Dixon" %}
+            <td class="table-secondary" scope="row">{{sobrevivente.nome}}</td>
+            {% else%}
+            <td class="table-secondary" scope="row"></td>
+            {% endif%}
+            <td class="table-secondary" scope="row">{{sobrevivente.item}}</td>
+
+            <td class="table-secondary" scope="row">{{item.alimentacao}}</td>
+            <td class="table-secondary" scope="row">{{immobile.type_item}}</td>
+            <td class="table-secondary" scope="row">pts. {{immobile.price}}</td>
+
+            <td class="table-secondary" scope="row">
+                {% if ponto.is_pontos == True %}
+                <i class="fas fa-check-circle fa-2x link-success"></i>
+                {% else %}
+                <i class="fas fa-minus-circle fa-2x link-danger"></i>
+                {% endif %} 
+            </td>
+
+        </tr>  
+        {% endfor %}
+        
+    </tbody>
+</table>
+</div>
+<script src="{% static 'sobreviventes/js/sobreviventes.js' %}"></script>
+{% endblock  %}
