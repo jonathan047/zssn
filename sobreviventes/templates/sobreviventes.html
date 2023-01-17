@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block 'head' %}
+    <link rel= "stylesheet" href="{% static 'sobreviventes/css/sobreviventes.css' %}">
+{% endblock  %}
+
+{% block 'dashboard' %}
+
+    <div class="container">
+        <div class="row">
+            <div onclick="exibir_form('1')" class="col-md card-dashboard">
+                <p class="text-card">Adicionar Sobreviventes</p>
+            </div>
+            <div onclick="exibir_form('2')" class="col-md card-dashboard">
+                <p class="text-card">Atualizar Status dos Sobreviventes</p>
+            </div>
+        </div>
+        
+        <div id="Adicionar-sobrevivente" class="Adicionar-sobrevivente">
+            <form action="{% url 'sobreviventes' %}" method="POST">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md">
+                        <p>Nome</p>
+                        <input type="text" class="form-control" placeholder="Nome" name="nome" value="{{nome}}">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md">
+                        <p>Idade</p>
+                        <input type="number" class="form-control" placeholder="Idade" name="idade" value="{{idade}}">
+                    </div>
+                    <div class="col-md">
+                        <p>Sexo</p>
+                        <input type="text" class="form-control" placeholder="Sexo" name="sexo" value="{{sexo}}">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md">
+                    <p>Localização</p>
+                    <input type="text" class="form-control" placeholder="Localização" name="localização" value="{{localizacao}}">
+                    </div>
+                </div>
+                <hr style="background-color:gray;">
+                <div class="add-item">
+                    <h3>Inventário</h3>
+                    <span class="btn-add-itens" onclick="add_item()">+ Adicionar um ou mais itens</span>
+                    
+                    <div id="form-item">
+                        {% for item, quant in item %}
+                            <br>
+                            <div class="row">
+                                <div class="col-md">
+                                    <input type='text' placeholder='Item' class='form-control' name='item' value="{{item}}">
+                                </div>
+                                
+                                <div class="col-md">
+                                    <input type='number' placeholder='Quant.' class='form-control' name='quant' value="{{quant}}">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+                <br>
+                <input type="submit" value="Cadastrar" class="btn-principal">
+            </form>
+            
+        </div>
+        
+        <div id="att_sobrevivente">
+            <p></p>
+            <select id="sobrevivente-select" onchange="dados_sobrevivente()">
+                {% for sobrevivente in sobreviventes  %}
+                <option value="{{sobrevivente.id}}">{{sobrevivente.nome}}</option>
+                {% endfor %}   
+            </select> 
+            <br>
+            <hr>
+            
+            <div id="form-att-sobrevivente">
+                <input type="hidden" id="id">
+                <p>Nome:</p>
+                <input id="nome" type="text" class='form-control'>
+                <p>Idade:</p>
+                <input id="idade" type="number" class='form-control'>
+                <p>Sexo:</p>
+                <input id="sexo" type="text" class='form-control'>
+                <p> Atualizar Localização:</p>
+                <input id="localizacao" type="text" class='form-control'>
+                <hr style="background-color: gray;">
+                <input onclick="update_cliente()" type="submit" value="salvar" class="btn btn-success">
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'sobreviventes/js/sobreviventes.js' %}"></script>
+{% endblock  %}
+
+
