@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel= "stylesheet" href="{% static 'sobreviventes/css/sobreviventes.css' %}">
+    <link rel ="styleshhet" href="{% static 'servicos/css/servicos.css' %}">
+    <script src="{% static 'servicos/js/servicos.js' %}"></script>
+{% endblock  %}
+
+
+{% block 'dashboard'%}
+    <br>
+    <br>
+    <div class= "container">
+        <br>
+        <div class="alert alert-danger" role="alert">
+           <p>ALERTA!</p>
+           <p>Daryl Dixon não tem permissão para ter contato com os sobreviventes.</p>
+           <p>Os outros sobreviventes relatam que ele está infectado</p>
+        </div>
+        <br>
+        <form action= "{% url 'novo_servico'%}" method="POST">{% csrf_token %}
+        {{form.as_p}}
+        
+        <hr>
+        <input type="submit" class="btn btn-success" value="Salvar" data-bs-toggle="modal" data-bs-target="btn btn-success">
+       
+        </form>   
+        
+       
+        
+    </div>
+{% endblock%}
